@@ -1,0 +1,23 @@
+node
+{
+def mavenHome  =tool name:"maven 3.8.6"
+stage ('git hub pulling')
+{
+git 'https://github.com/anoop4206/tech1.git'
+}
+stage ('build')
+{
+sh  "${mavenHome}/bin/mvn clean package"
+}
+}
+stage ('nexus')
+{
+sh  "${mavenHome}/bin/mvn clean deploy"
+}
+stage ('tomcat')
+{
+sshagent(['e71e6a60-35b7-49fc-9125-7d340c173c66'])
+{
+sh "scp -o StrictHostKeyChecking=no target/maven-web-application.war ec2-user@52.66.197.202:/opt/apache-tomcat-9.0.64/webapps"
+}
+}
