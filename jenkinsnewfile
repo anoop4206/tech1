@@ -3,11 +3,11 @@ pipeline
 agent any
 tools
 {
-maven"maven3.8.6"
+maven"maven 3.8.6"
 }
 stages
 {
-satge ('pulling from git')
+stage ('pulling from git')
 {
 steps
 {
@@ -21,12 +21,12 @@ steps
 sh "mvn clean package"
 }
 }
-stage ('nexus')
+stages('nexus')
 {
 sh "mvn clean deploy"
 }
 }
-stage ('DeployAppintoTomcatServer')
+stage('DeployintoTomcatServer')
 {
 steps
 {
