@@ -1,0 +1,38 @@
+pipeline
+{
+agent any
+tools
+{
+maven"maven3.8.6"
+}
+stages
+{
+satge('pulling from git')
+{
+steps
+{
+git branch:'main',git 'https://github.com/anoop4206/tech1.git'
+}
+}
+stage('build')
+{
+steps
+{
+sh "mvn clean package"
+}
+}
+stage ('nexus')
+{
+sh "mvn clean deploy"
+}
+}
+stage('DeployAppintoTomcatServer')
+{
+steps
+{
+sshagent(['e71e6a60-35b7-49fc-9125-7d340c173c66'])
+}
+{
+sh"scp -o StrictHostKeyChecking=no target/maven-web-application.war ec2-user@13.127.251.91:/opt/apache-tomcat-9.0.64/webapps"
+}
+}
