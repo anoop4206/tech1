@@ -11,7 +11,7 @@ stage ('pulling from git')
 {
 steps
 {
-git branch:'main',git 'https://github.com/anoop4206/tech1.git'
+git 'https://github.com/anoop4206/tech1.git'
 }
 }
 stage ('build')
@@ -21,12 +21,12 @@ steps
 sh "mvn clean package"
 }
 }
-stages('nexus')
+stage('nexus')
 {
 sh "mvn clean deploy"
 }
 }
-stage('DeployintoTomcatServer')
+stage('DeployAppintoTomcatServer')
 {
 steps
 {
